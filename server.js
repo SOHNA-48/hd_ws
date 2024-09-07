@@ -2,12 +2,32 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const config = require('./public/js/data.js'); // data.js에서 config 가져오기
 const path = require('path'); // path 모듈을 불러오기
+const WebSocket = require('ws');
+const http = require('http');
 const app = express();
 const port = 3000;
 
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+const server = http.createServer(app);
+// WebSocket 서버 생성
+const wss = new WebSocket.Server({ server });
+
+// WebSocket 연결 핸들러
+wss.on('connection', (ws) => {
+    console.log('New WebSocket connection');
+
+    ws.on('message', (message) => {
+        console.log(`Received message => ${message}`);
+        // 클라이언트로 메시지 전송
+        ws.send(`Server received: ${message}`);
+    });
+
+    ws.on('close', () => {
+        console.log('WebSocket connection closed');
+    });
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/view/swagger.html'));

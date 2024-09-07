@@ -93,7 +93,7 @@ page.fn.tryItOut = function (t) {
 }
 page.fn.sendApi = function(data) {
     let contentType = _common.isEmpty(data.contentType) ? "application/json" : contentType;
-
+    console.log(data.param)
     $.ajax({
         url: data.uri,  
         type: data.type,   

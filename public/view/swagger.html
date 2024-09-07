@@ -227,6 +227,7 @@
                     </div>
                     <button 
                     id="btnTry_#idx#"
+                    type="button"
                     data-idx="#idx#"
                     data-isRaw=true
                     onclick="page.fn.tryItOut(this);">try it out</button>
@@ -254,6 +255,12 @@
         <input id="apiData_#idx#_#key#" type="text" data-require="#require#">
     </div>
 </script>
+<script type="text/html" id="tmpl-apiParam">
+    <div class="input">
+        <label>#key#(#type#)</label>
+        <input id="apiData_#idx#_#key#" type="text" data-require="#require#">
+    </div>
+</script>
 
 <script>
     const now = new Date();
@@ -272,7 +279,13 @@
             ))
             data.requestData.forEach(function(requestData, i) {
                 requestData.idx = idx
-                $("#parameterInput_"+ idx).append(_common.template.parseObject("tmpl-apiParam", requestData))
+                if (requestData.type != "object") {
+                    $("#parameterInput_"+ idx).append(_common.template.parseObject("tmpl-apiParam", requestData))
+
+                }
+                else {
+
+                }
             })
 
         })
