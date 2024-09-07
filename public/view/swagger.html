@@ -1,0 +1,303 @@
+<!Doctype html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="_csrf" content="your-csrf-token">
+    <!-- 검색엔진 추적 차단 -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/data.js"></script>
+    <script src="js/swagger.js"></script>
+    <script src="js/common.js"></script>
+    <!-- <script src="js/log.js"></script> -->
+    <script src="js/lib/jquery-3.5.1.min.js"></script>
+    <script src="js/lib/jquery-ui.min.js"></script>
+    <script src="js/lib/jquery.tablednd.min.js"></script>
+    <title>API SWAGGER</title>
+</head>
+<body>
+
+<div class="container">
+    <!-- API TEST 테이블 -->
+    <h4 class="section-title">API TEST</h4>
+    <table class="table table-bordered">
+        <colgroup>
+            <col width="15%">
+            <col width="5%">
+            <col width="30%">
+
+            <col width="5%">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>TYPE</th>
+            <th>Request URI</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="apiTestTable">
+        <tr>
+            <td>1</td>
+            <td>시나리오1</td>
+            <td>시나리오1</td>
+            <td>
+                <div class="status-buttons">
+                    <div class="btn-group">
+                        <!-- <button class="btn btn-secondary btn-start" onclick="startEdgeScenario(this)">SEND</button> -->
+                        <!-- <button class="btn btn-secondary" onclick="endEdgeScenario(this)" disabled="disabled">종료</button> -->
+                    </div>
+                    <span class="toggle-arrow" onclick="toggleArrow(this)">▼</span>
+                </div>
+            </td>
+        </tr>
+        <tr class="log-row">
+            <td colspan="4">
+                <div class="log-cell" id="logEdge1">
+                    <div class="cell-header">
+                        <div>Parameters</div>
+                        <button>try it out</button>
+                    </div>
+                    <div class="parameters-raw" style="display: none;">
+                        <textarea></textarea>
+                    </div>
+                    <div class="parameters-input">
+                        <div class="input">
+                            <label>아이디</label>
+                            <input type="text">
+                        </div>
+                        <div class="input">
+                            <label>아이디</label>
+                            <input type="text">
+                        </div>
+                        
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="log-row">
+            <td colspan="4">
+                <div class="log-cell" id="logEdge1">
+                    <div><button class="btn btn-secondary btn-start" onclick="startEdgeScenario(this)">SEND</button>
+                    </div>
+                    <!-- 로그 메시지가 여기에 추가됩니다 -->
+                </div>
+            </td>
+        </tr>
+        <div>
+
+        </div>
+
+
+        </tbody>
+    </table>
+
+    <!-- Main TEST 테이블 -->
+    <h4 class="section-title">Main TEST</h4>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>시나리오</th>
+            <th>Edge</th>
+            <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>시나리오1</td>
+            <td>
+                <select class="form-control dropdown" id="mainEdgeSelect1">
+                    <option value="">선택</option>
+                    <option value="Edge01">Edge01</option>
+                    <option value="Edge02">Edge02</option>
+                    <option value="Edge03">Edge03</option>
+                </select>
+            </td>
+            <td>
+                <div class="status-buttons">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-start" onclick="startMainScenario(this)">시작</button>
+                        <button class="btn btn-secondary" onclick="endMainScenario(this)" disabled="disabled">종료</button>
+                    </div>
+                    <span class="toggle-arrow" onclick="toggleLog(this)">▼</span>
+                </div>
+            </td>
+        </tr>
+        <tr class="log-row">
+            <td colspan="4">
+                <div class="log-cell" id="logMain1">
+                    <!-- 로그 메시지가 여기에 추가됩니다 -->
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>시나리오2</td>
+            <td>
+                <select class="form-control dropdown" id="mainEdgeSelect2">
+                    <option value="">선택</option>
+                    <option value="Edge01">Edge01</option>
+                    <option value="Edge02">Edge02</option>
+                    <option value="Edge03">Edge03</option>
+                </select>
+            </td>
+            <td>
+                <div class="status-buttons">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-start" onclick="startMainScenario(this)">시작</button>
+                        <button class="btn btn-secondary" onclick="endMainScenario(this)" disabled="disabled">종료</button>
+                    </div>
+                    <span class="toggle-arrow" onclick="toggleLog(this)">▼</span>
+                </div>
+            </td>
+        </tr>
+        <tr class="log-row">
+            <td colspan="4">
+                <div class="log-cell" id="logMain2">
+                    <!-- 로그 메시지가 여기에 추가됩니다 -->
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>시나리오3</td>
+            <td>
+                <select class="form-control dropdown" id="mainEdgeSelect3">
+                    <option value="">선택</option>
+                    <option value="Edge01">Edge01</option>
+                    <option value="Edge02">Edge02</option>
+                    <option value="Edge03">Edge03</option>
+                </select>
+            </td>
+            <td>
+                <div class="status-buttons">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-start" onclick="startMainScenario(this)">시작</button>
+                        <button class="btn btn-secondary" onclick="endMainScenario(this)" disabled="disabled">종료</button>
+                    </div>
+                    <span class="toggle-arrow" onclick="toggleLog(this)">▼</span>
+                </div>
+            </td>
+        </tr>
+        <tr class="log-row">
+            <td colspan="4">
+                <div class="log-cell" id="logMain3">
+                    <!-- 로그 메시지가 여기에 추가됩니다 -->
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    
+
+<script type="text/html" id="tmpl-api">
+    <tr>
+        <td>#action#</td>
+        <td>#uri#</td>
+        <td>#type#</td>
+        <td>
+            <div class="status-buttons">
+                <div class="btn-group">
+                    <!-- <button class="btn btn-secondary btn-start" onclick="startEdgeScenario(this)">SEND</button> -->
+                    <!-- <button class="btn btn-secondary" onclick="endEdgeScenario(this)" disabled="disabled">종료</button> -->
+                </div>
+                <span class="toggle-arrow" onclick="toggleArrow(this)">▼</span>
+            </div>
+        </td>
+    </tr>
+    <tr class="log-row">
+        <td colspan="4">
+            <div class="log-cell" id="logEdge1">
+                <div class="cell-header">
+                    <div class="left">Parameters
+                        <div 
+                        data-idx="#idx#"
+                        onclick="page.fn.toggleAPIRequest(this);"
+                        >raw</div>
+                        <div
+                        data-idx="#idx#"
+                        onclick="page.fn.toggleAPIRequest(this);">input</div>
+                    </div>
+                    <button 
+                    id="btnTry_#idx#"
+                    data-idx="#idx#"
+                    data-isRaw=true
+                    onclick="page.fn.tryItOut(this);">try it out</button>
+                </div>
+                <div class="parameters-raw" data-idx="#idx#">
+                    <textarea id="paramRaw_#idx#"></textarea>
+                </div>
+                <div class="parameters-input" data-idx="#idx#" style="display: none;" id="parameterInput_#idx#">
+
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr class="log-row">
+        <td colspan="4">
+            <pre class="log-cell" id="responseData_#idx#">
+                
+            </pre>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="tmpl-apiParam">
+    <div class="input">
+        <label>#key#(#type#)</label>
+        <input id="apiData_#idx#_#key#" type="text" data-require="#require#">
+    </div>
+</script>
+
+<script>
+    const now = new Date();
+    const formattedTime = now.toLocaleTimeString(); // 현재 시간을 'HH:MM:SS' 형식으로 출력
+</script>
+
+<script>
+    $(document).ready(function() {
+        page.data.api = new HashMap();
+        $("#apiTestTable").empty();
+        config.apiData.forEach(function(data, idx) {
+            console.log(idx, data)
+            data.idx = idx
+            page.data.api.put(idx, data);
+            $("#apiTestTable").append(_common.template.parseObject("tmpl-api", data
+            ))
+            data.requestData.forEach(function(requestData, i) {
+                requestData.idx = idx
+                $("#parameterInput_"+ idx).append(_common.template.parseObject("tmpl-apiParam", requestData))
+            })
+
+        })
+    })
+
+    function toggleArrow(arrow) {
+        const row = arrow.closest('tr');
+        const param = row.nextElementSibling;
+        const res = param.nextElementSibling;
+
+        if (param.style.display === 'none' || param.style.display === '') {
+            param.style.display = 'table-row';
+            res.style.display = 'table-row';
+            arrow.textContent = '▲';
+        } else {
+            param.style.display = 'none';
+            res.style.display = 'none';
+            arrow.textContent = '▼';
+        }
+    }
+
+    
+
+</script>
+
+
+</body>
+</html>
