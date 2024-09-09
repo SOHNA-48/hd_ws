@@ -93,7 +93,6 @@ page.fn.tryItOut = function (t) {
 }
 page.fn.sendApi = function(data) {
     let contentType = _common.isEmpty(data.contentType) ? "application/json" : contentType;
-    console.log(data.param)
     $.ajax({
         url: "/api"+ data.uri,  
         type: data.type,   
@@ -102,6 +101,11 @@ page.fn.sendApi = function(data) {
         success: function(response) {
             console.log('요청 성공:', response);
             $("#responseData_" + data.idx).text(JSON.stringify(response, null, 2))
+
+            if (response.data && response.data.accesskey) {
+                localStorage.setItem('accesskey', response.data.accesskey);
+                console.log('accesskey 저장됨:', response.data.accesskey);
+            }
         },
         error: function(xhr, status, error) {
             console.error('요청 실패:', error);
@@ -121,21 +125,3 @@ page.fn.toggleAPIRequest = function(t) {
         $(".parameters-input[data-idx="+ idx + "]").show();
     }
 }
-
-page.fn.test = function(data) {
-    $.ajax({
-        url: '/api/login',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-          id: 'cleanware',
-          password: 'cleanware!'
-        }),
-        success: function(response) {
-          console.log('로그인 성공:', response);
-        },
-        error: function(xhr, status, error) {
-          console.error('로그인 실패:', error);
-        }
-      });
-};
