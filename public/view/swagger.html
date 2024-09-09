@@ -281,10 +281,12 @@
                 requestData.idx = idx
                 if (requestData.type != "object") {
                     $("#parameterInput_"+ idx).append(_common.template.parseObject("tmpl-apiParam", requestData))
-
                 }
                 else {
-
+                    requestData.parameter.forEach(function(objectParam) {
+                        objectParam.idx = idx;
+                        $("#parameterInput_"+ idx).append(_common.template.parseObject("tmpl-apiParam", objectParam))
+                    })
                 }
             })
 

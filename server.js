@@ -7,7 +7,23 @@ const http = require('http');
 const app = express();
 const port = 3000;
 
-
+app.use('/api',
+    createProxyMiddleware({
+    
+    target: 'http://127.0.0.1:8082',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': '',
+    },  onProxyReq: (proxyReq, req, res) => {
+            console.log('Proxying request to:', proxyReq.path);
+            console.log('Request headers:', req.headers);
+            console.log(res);
+        },
+        onError: (err, req, res) => {
+            console.error('Proxy error:', err);
+            res.status(500).send('Proxy error occurred');
+        }
+  }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 const server = http.createServer(app);
@@ -29,62 +45,14 @@ wss.on('connection', (ws) => {
     });
 });
 
+app.use('/login', (req, res, next) => {
+    console.log('로그인 경로에 대한 요청이 프록시로 전달되기 전에 호출됨');
+    next();
+  });
+
 app.get('/', (req, res) => {
+    console.log("main으로 왓음");
   res.sendFile(path.join(__dirname, 'public/view/swagger.html'));
-});
-
-// /login 경로를 외부 서버로 프록시 설정
-// app.use('/login', createProxyMiddleware({
-//     // target: 'http://15.165.166.179:8082',  
-//     target: 'http://127.0.0.1:8082',  
-//     changeOrigin: true,  
-//     pathRewrite: pathRewrite,
-//     onProxyReq: (proxyReq, req, res) => {
-//         console.log('Proxying request to:', proxyReq.path); // 디버깅용 로그
-//       },
-//   }));
-
-
-// config.apiData.forEach(api => {
-//     app.use(api.uri, createProxyMiddleware({
-//         target: 'http://127.0.0.1:8082',
-//         changeOrigin: true,
-//         pathRewrite: {
-//             [`^${api.uri}`]: api.uri // 로컬 경로를 외부 서버의 경로로 매핑
-//         },
-//         logLevel: 'debug', // 디버깅을 위한 로그 레벨 설정
-//         onProxyReq: (proxyReq, req, res) => {
-//             console.log(`Proxying request to: ${api.uri}`);
-//             console.log('Request headers:', req.headers); // 요청 헤더 출력
-
-//             // 인증이 필요한 경우, 인증 헤더를 추가합니다.
-//             if (api.authorization) {
-//                 proxyReq.setHeader('Authorization', 'Bearer YOUR_ACCESS_TOKEN');
-//             }
-//         },
-//         onError: (err, req, res) => {
-//             console.error('Proxy error:', err); // 에러 발생 시 로그 출력
-//             res.status(500).send('Proxy error occurred');
-//         },
-//     }));
-// });
-
-config.apiData.forEach(api => {
-    app.use(api.uri, createProxyMiddleware({
-        target: 'http://127.0.0.1:8082',
-        changeOrigin: true,
-        pathRewrite: {
-            [`^${api.uri}`]: api.uri // 로컬 경로를 외부 서버의 경로로 매핑
-        },
-        onProxyReq: (proxyReq, req, res) => {
-            console.log('Proxying request to:', proxyReq.path);
-            console.log('Request headers:', req.headers);
-        },
-        onError: (err, req, res) => {
-            console.error('Proxy error:', err);
-            res.status(500).send('Proxy error occurred');
-        }
-    }));
 });
 
 app.listen(port, () => {

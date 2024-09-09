@@ -68,7 +68,7 @@ page.fn.tryItOut = function (t) {
     console.log(idx, page.data.api.get(idx));
 
     let param = {};
-    console.log(isRaw);
+    console.log(typeof(isRaw));
     if (isRaw == true) {
         param = $("#paramRaw_"+ idx).val();
         console.log("ddd")
@@ -95,7 +95,7 @@ page.fn.sendApi = function(data) {
     let contentType = _common.isEmpty(data.contentType) ? "application/json" : contentType;
     console.log(data.param)
     $.ajax({
-        url: data.uri,  
+        url: "/api"+ data.uri,  
         type: data.type,   
         contentType: 'application/json',  
         data: JSON.stringify(data.param), 
@@ -121,3 +121,21 @@ page.fn.toggleAPIRequest = function(t) {
         $(".parameters-input[data-idx="+ idx + "]").show();
     }
 }
+
+page.fn.test = function(data) {
+    $.ajax({
+        url: '/api/login',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          id: 'cleanware',
+          password: 'cleanware!'
+        }),
+        success: function(response) {
+          console.log('로그인 성공:', response);
+        },
+        error: function(xhr, status, error) {
+          console.error('로그인 실패:', error);
+        }
+      });
+};

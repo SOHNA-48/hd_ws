@@ -66,8 +66,27 @@ config.apiData = [
                             ,   require: true}, 
                             {
                                 key: "deviceStatus"
-                            ,   type: "string"
-                            ,   require: true}
+                            ,   type: "object"
+                            ,   require: true
+                            ,   parameter: [
+                                {
+                                    key: "power"
+                                ,   type: "string"
+                                ,   require: true}, 
+                                {
+                                    key: "mode"
+                                ,   type: "string"
+                                ,   require: true}, 
+                                {
+                                    key: "fanMode"
+                                ,   type: "string"
+                                ,   require: true}, 
+                                {
+                                    key: "setCoolingPoint"
+                                ,   type: "string"
+                                ,   require: true}, 
+                            ]
+                            }
     
         ]
     }
